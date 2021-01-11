@@ -15,6 +15,9 @@
             background-size: cover;
             height: 100vh;
         }
+        .weather-status{
+            display: none;
+        }
     </style>
 </head>
 
@@ -23,12 +26,12 @@
         <form class="col-md-6 m-auto py-5">
             <div class="input-group mb-3">
                 <input id="input" type="text" class="form-control" placeholder="Enter a location for Weather update...">
-                <div  class="input-group-append">
+                <div class="input-group-append">
                     <button id="submit" type="button" class="btn btn-danger">Search</button>
                 </div>
             </div>
         </form>
-        <div class="weather-status text-white text-center">
+        <div id="details" class="weather-status text-white text-center">
             <img src="https://openweathermap.org/img/wn/02d@2x.png" alt="">
             <h1 id="city">Dhaka</h1>
             <h3><span id="deg">38.6</span>&deg;C</h3>
@@ -41,10 +44,9 @@
         let name = document.querySelector('#city');
         let temp = document.querySelector('#deg');
         let info = document.querySelector('.info');
-         let key = 'ff36491d9523761cec4d0bc539fd302a';  
 
         button.addEventListener('click', function () {
-            fetch('api.openweathermap.org/data/2.5/weather?q={input}&appid={key}')
+            fetch('https://api.openweathermap.org/data/2.5/weather?q='+input.value+'&appid=ff36491d9523761cec4d0bc539fd302a')
                 .then(res => res.json())
                 .then(data => {
                     // console.log(data);
@@ -54,11 +56,12 @@
 
                     
                     name.innerHTML = cityName;
-                    temp.innerHTML = (degNumber / 10).toFixed(1);
+                    temp.innerHTML = (degNumber -273).toFixed(1);
                     info.innerHTML = infoUpdate;
+                    document.getElementById('details').style.display ="block";
+                    
 
 
-                    console.log("Success")
                     // console.log(data);
                     // console.log(infoUpdate)
 
@@ -68,7 +71,7 @@
 
         })
         
-        //       
+        //     let key = 'ff36491d9523761cec4d0bc539fd302a';     
 
 
     </script>
